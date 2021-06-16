@@ -18,21 +18,24 @@
       <div class="container text-dark mt-5">
         <div class="row justify-content-md-center">
           <div class="col-md-7">
-            <div class="flex-container">
-              {% for i in leds %}
-                <div id="cp{{ i }}" class="input-group colorpicker-element" title="Using input value">
-                    <input type="text" class="form-control input-lg" value="#000000" hidden>
-                    <span class="input-group-text colorpicker-input-addon" data-original-title="" title="" tabindex="0"><i style="background: #000000 none repeat scroll 0% 0%;"></i></span>
-                </div>
-                <script>
-                  $(function () {
-                    $('#cp{{ i }}').colorpicker({
-                      format: "hex"
+            <form action="">
+              <div class="flex-container">
+                {% for i in leds %}
+                  <div id="cp{{ i }}" class="input-group colorpicker-element" title="Using input value">
+                      <input type="text" class="form-control input-lg" value="#000000" hidden>
+                      <span class="input-group-text colorpicker-input-addon" data-original-title="" title="" tabindex="0"><i style="background: #000000 none repeat scroll 0% 0%;"></i></span>
+                  </div>
+                  <script>
+                    $(function () {
+                      $('#cp{{ i }}').colorpicker({
+                        format: "hex"
+                      });
                     });
-                  });
-                </script>
-              {% endfor %}
-            </div>
+                  </script>
+                {% endfor %}
+              </div><br>
+              <input type="submit" class="btn btn-success" value="Save"></input>
+            </form>
           </div>
         </div>
       </div>

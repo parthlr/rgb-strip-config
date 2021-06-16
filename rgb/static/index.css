@@ -1,0 +1,10 @@
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-container .input-group span {
+  diplay: inline-block;
+  padding: 0px;
+  margin: 5px;
+}
