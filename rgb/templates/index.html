@@ -18,16 +18,18 @@
       <div class="container text-dark mt-5">
         <div class="row justify-content-md-center">
           <div class="col-md-7">
-            <form action="">
+            <form action="{% url 'save_profile' %}" method="post">
+              {% csrf_token %}
+              <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name"></input>
               <div class="flex-container">
                 {% for i in leds %}
-                  <div id="cp{{ i }}" class="input-group colorpicker-element" title="Using input value">
-                      <input type="text" class="form-control input-lg" value="#000000" hidden>
+                  <div id="led{{ i }}" class="input-group colorpicker-element" title="Using input value">
+                      <input type="text" name="led{{ i }}" class="form-control input-lg" value="#000000" hidden>
                       <span class="input-group-text colorpicker-input-addon" data-original-title="" title="" tabindex="0"><i style="background: #000000 none repeat scroll 0% 0%;"></i></span>
                   </div>
                   <script>
                     $(function () {
-                      $('#cp{{ i }}').colorpicker({
+                      $('#led{{ i }}').colorpicker({
                         format: "hex"
                       });
                     });
