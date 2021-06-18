@@ -22,5 +22,13 @@ def save_profile(request):
 def request_json(request):
     p = Profile.objects.get(active=True)
 
-    data = [{'num_leds': p.leds, 'rgb_values': p.rgb_values}]
+    data = [{'num_leds': p.leds}]
+    led_values = {}
+    index = 0
+    for i in range(p.leds):
+        current_hex = p.rgb_values[index:index + 7]
+        led_values.update({str(i): current_hex})
+        index += 7
+    data.append({'rgb_values': led_values})
+
     return JsonResponse(data, safe=False)
