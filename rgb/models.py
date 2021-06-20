@@ -5,5 +5,5 @@ from django.db import models
 class Profile(models.Model):
     name = models.CharField(max_length=20)
     leds = models.IntegerField()
-    rgb_values = models.TextField()
+    rgb_values = models.JSONField()
     active = models.BooleanField()

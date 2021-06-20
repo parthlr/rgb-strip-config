@@ -20,17 +20,20 @@
           <div class="col-md-7">
             <form action="{% url 'save_profile' %}" method="post">
               {% csrf_token %}
-              <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name"></input>
+              <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name" value="{{ profile.name }}"></input>
               <div class="flex-container">
-                {% for i in leds %}
-                  <div id="led{{ i }}" class="input-group colorpicker-element" title="Using input value">
-                      <input type="text" name="led{{ i }}" class="form-control input-lg" value="#000000" hidden>
-                      <span class="input-group-text colorpicker-input-addon" data-original-title="" title="" tabindex="0"><i style="background: #000000 none repeat scroll 0% 0%;"></i></span>
+                {% for i, hex in profile.rgb_values.items %}
+                  <div id="led{{ i }}" class="input-group" title="Using input value">
+                      <input type="text" name="led{{ i }}" class="form-control input-lg" hidden>
+                      <span class="input-group-append">
+                        <span class="input-group-text colorpicker-input-addon"><i></i></span>
+                      </span>
                   </div>
                   <script>
                     $(function () {
                       $('#led{{ i }}').colorpicker({
-                        format: "hex"
+                        format: "hex",
+                        color: "{{ hex }}",
                       });
                     });
                   </script>
