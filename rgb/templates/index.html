@@ -22,22 +22,40 @@
               {% csrf_token %}
               <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name" value="{{ profile.name }}"></input>
               <div class="flex-container">
-                {% for i, hex in profile.rgb_values.items %}
-                  <div id="led{{ i }}" class="input-group" title="Using input value">
-                      <input type="text" name="led{{ i }}" class="form-control input-lg" hidden>
-                      <span class="input-group-append">
-                        <span class="input-group-text colorpicker-input-addon"><i></i></span>
-                      </span>
-                  </div>
-                  <script>
-                    $(function () {
-                      $('#led{{ i }}').colorpicker({
-                        format: "hex",
-                        color: "{{ hex }}",
+                {% if profile %}
+                  {% for i, hex in profile.rgb_values.items %}
+                    <div id="led{{ i }}" class="input-group" title="Using input value">
+                        <input type="text" name="led{{ i }}" class="form-control input-lg" hidden>
+                        <span class="input-group-append">
+                          <span class="input-group-text colorpicker-input-addon"><i></i></span>
+                        </span>
+                    </div>
+                    <script>
+                      $(function () {
+                        $('#led{{ i }}').colorpicker({
+                          format: "hex",
+                          color: "#{{ hex }}",
+                        });
                       });
-                    });
-                  </script>
-                {% endfor %}
+                    </script>
+                  {% endfor %}
+                {% else %}
+                  {% for i in n %}
+                    <div id="led{{ i }}" class="input-group" title="Using input value">
+                        <input type="text" name="led{{ i }}" class="form-control input-lg" hidden>
+                        <span class="input-group-append">
+                          <span class="input-group-text colorpicker-input-addon"><i></i></span>
+                        </span>
+                    </div>
+                    <script>
+                      $(function () {
+                        $('#led{{ i }}').colorpicker({
+                          format: "hex"
+                        });
+                      });
+                    </script>
+                  {% endfor %}
+                {% endif %}
               </div><br>
               <input type="submit" class="btn btn-success" value="Save"></input>
             </form>
