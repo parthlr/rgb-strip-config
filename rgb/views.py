@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
@@ -6,10 +6,11 @@ from .models import Profile
 # Create your views here.
 
 def index(request):
-    if (Profile.objects.filter(active=True).count() == 1):
-        p = Profile.objects.get(active=True)
-        return render(request, 'index.html', {'profile': p})
-    return render(request, 'index.html', {'n': range(10)})
+    return render(request, 'index.html', {'profiles': Profile.objects.all()})
+
+def show_profile(request, profile_id):
+    profile = get_object_or_404(Profile, id=profile_id)
+    return render(request, 'profile.html', {'profile': profile})
 
 def save_profile(request):
     profile_name = request.POST['profile_name']

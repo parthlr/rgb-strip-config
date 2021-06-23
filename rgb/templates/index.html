@@ -18,47 +18,32 @@
       <div class="container text-dark mt-5">
         <div class="row justify-content-md-center">
           <div class="col-md-7">
-            <form action="{% url 'save_profile' %}" method="post">
-              {% csrf_token %}
-              <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name" value="{{ profile.name }}"></input>
-              <div class="flex-container">
-                {% if profile %}
-                  {% for i, hex in profile.rgb_values.items %}
-                    <div id="led{{ i }}" class="input-group" title="Using input value">
-                        <input type="text" name="led{{ i }}" class="form-control input-lg" hidden>
+            <h1>Profiles</h1><br>
+            {% for profile in profiles %}
+              <div class="card" style="max-width: 50rem;">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{% url 'profile' profile.id %}">{{ profile.name }}</a></h5>
+                  <p class="card-text">Preview:</p>
+                  <div class="flex-container">
+                    {% for i, hex in profile.rgb_values.items %}
+                      <div id="led{{ i }}-{{ profile.id }}" class="input-group" title="Using input value">
                         <span class="input-group-append">
                           <span class="input-group-text colorpicker-input-addon"><i></i></span>
                         </span>
-                    </div>
-                    <script>
-                      $(function () {
-                        $('#led{{ i }}').colorpicker({
-                          format: "hex",
-                          color: "#{{ hex }}",
+                      </div>
+                      <script>
+                        $(function () {
+                          $('#led{{ i }}-{{ profile.id }}').colorpicker({
+                            format: "hex",
+                            color: "#{{ hex }}",
+                          });
                         });
-                      });
-                    </script>
-                  {% endfor %}
-                {% else %}
-                  {% for i in n %}
-                    <div id="led{{ i }}" class="input-group" title="Using input value">
-                        <input type="text" name="led{{ i }}" class="form-control input-lg" hidden>
-                        <span class="input-group-append">
-                          <span class="input-group-text colorpicker-input-addon"><i></i></span>
-                        </span>
-                    </div>
-                    <script>
-                      $(function () {
-                        $('#led{{ i }}').colorpicker({
-                          format: "hex"
-                        });
-                      });
-                    </script>
-                  {% endfor %}
-                {% endif %}
+                      </script>
+                    {% endfor %}
+                  </div>
+                </div>
               </div><br>
-              <input type="submit" class="btn btn-success" value="Save"></input>
-            </form>
+            {% endfor %}
           </div>
         </div>
       </div>
