@@ -6,11 +6,26 @@ from .models import Profile
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html', {'profiles': Profile.objects.all()})
+    return render(request, 'index.html', {'profiles': Profile.objects.order_by('-active')})
 
 def show_profile(request, profile_id):
     profile = get_object_or_404(Profile, id=profile_id)
     return render(request, 'profile.html', {'profile': profile})
+
+def new_profile(request):
+    return render(request, 'new_profile.html', {'n': range(10)})
+
+def update_profile(request, profile_id):
+    profile_name = request.POST['profile_name']
+    num_leds = 10
+    led_rgbs = {}
+    for i in range(num_leds):
+        current_led = request.POST['led' + str(i)]
+        led_rgbs.update({str(i): current_led[1:]})
+
+    Profile.objects.filter(id=profile_id).update(name=profile_name, leds=num_leds, rgb_values=led_rgbs)
+
+    return HttpResponseRedirect(reverse('profile', args=(profile_id,)))
 
 def save_profile(request):
     profile_name = request.POST['profile_name']
@@ -22,6 +37,12 @@ def save_profile(request):
 
     p = Profile.objects.create(name=profile_name, leds=num_leds, rgb_values=led_rgbs, active=True)
     update_active_profile(p)
+
+    return HttpResponseRedirect(reverse('index'))
+
+def activate_profile(request, profile_id):
+    Profile.objects.filter(id=profile_id).update(active=True)
+    update_active_profile(Profile.objects.get(id=profile_id))
 
     return HttpResponseRedirect(reverse('index'))
 

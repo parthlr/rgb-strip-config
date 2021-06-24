@@ -18,13 +18,13 @@
       <div class="container text-dark mt-5">
         <div class="row justify-content-md-center">
           <div class="col-md-7">
-            <form action="{% url 'update_profile' profile.id %}" method="post">
+            <form action="{% url 'save_profile' %}" method="post">
               {% csrf_token %}
               <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name" value="{{ profile.name }}"></input>
               <div class="flex-container">
-                {% for i, hex in profile.rgb_values.items %}
+                {% for i in n %}
                   <div id="led{{ i }}" class="input-group" title="Using input value">
-                      <input type="text" name="led{{ i }}" class="form-control input-lg" hidden>
+                      <input type="text" name="led{{ i }}" class="form-control input-lg" value="#000000" hidden>
                       <span class="input-group-append">
                         <span class="input-group-text colorpicker-input-addon"><i></i></span>
                       </span>
@@ -32,8 +32,7 @@
                   <script>
                     $(function () {
                       $('#led{{ i }}').colorpicker({
-                        format: "hex",
-                        color: "#{{ hex }}",
+                        format: "hex"
                       });
                     });
                   </script>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.2.0/css/bootstrap-colorpicker.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'all.css' %}">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -18,11 +18,24 @@
       <div class="container text-dark mt-5">
         <div class="row justify-content-md-center">
           <div class="col-md-7">
-            <h1>Profiles</h1><br>
+            <div class="flex-container">
+              <h1>Profiles</h1>
+              <div>
+                <button class="btn btn-success" onclick="location.href='{% url 'new_profile' %}'">New</button>
+              </div>
+            </div><br>
             {% for profile in profiles %}
               <div class="card" style="max-width: 50rem;">
                 <div class="card-body">
-                  <h5 class="card-title"><a href="{% url 'profile' profile.id %}">{{ profile.name }}</a></h5>
+                  <div class="flex-container">
+                    {% if profile.active %}
+                      <h5 class="card-title"><a href="{% url 'profile' profile.id %}">{{ profile.name }}</a> <span class="badge badge-pill badge-success">Active</span></h5>
+                      <button class="btn btn-success" onclick="location.href='{% url 'activate_profile' profile.id %}'" disabled>Activate</button>
+                    {% else %}
+                      <h5 class="card-title"><a href="{% url 'profile' profile.id %}">{{ profile.name }}</a></h5>
+                      <button class="btn btn-success" onclick="location.href='{% url 'activate_profile' profile.id %}'">Activate</button>
+                    {% endif %}
+                  </div>
                   <p class="card-text">Preview:</p>
                   <div class="flex-container">
                     {% for i, hex in profile.rgb_values.items %}
