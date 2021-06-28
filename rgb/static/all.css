@@ -49,7 +49,12 @@ a:active {
   background-color: #242424;
 }
 
-.form-control[type=text] {
+input[type=text] {
+  background-color: #242424;
+  color: white;
+}
+
+input[type=number] {
   background-color: #242424;
   color: white;
 }

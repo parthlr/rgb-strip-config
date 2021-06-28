@@ -18,6 +18,21 @@
       <div class="container text-dark mt-5">
         <div class="row justify-content-md-center">
           <div class="col-md-7">
+            <div class="flex-container">
+              {% if profile.active %}
+                <div class="flex-container">
+                  <h1>{{ profile.name }}</h1>
+                </div>
+                <div>
+                  <button class="btn btn-success" onclick="location.href='{% url 'activate_profile' profile.id %}'" disabled>Activate</button>
+                </div>
+              {% else %}
+                <h1>{{ profile.name }}</a></h1>
+                <div>
+                  <button class="btn btn-success" onclick="location.href='{% url 'activate_profile' profile.id %}'">Activate</button>
+                </div>
+              {% endif %}
+            </div>
             <form action="{% url 'update_profile' profile.id %}" method="post">
               {% csrf_token %}
               <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name" value="{{ profile.name }}"></input>
