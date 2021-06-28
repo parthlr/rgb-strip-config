@@ -28,9 +28,9 @@
                   <input type="number" id="num_leds" name="num_leds" class="form-control input-lg" min="0" placeholder="Number of LEDs" required></input>
                 </div>
               </div><br>
-              <p id="test-p">Nothing</p>
+              <p id="test-p"></p>
               <div id="leds">
-                <div class="flex-container">
+                <div class="flex-container" id="flex0">
                   {% for i in n %}
                     <div id="led{{ i }}" class="input-group" title="Using input value">
                         <input type="text" name="led{{ i }}" class="form-control input-lg" value="#000000" hidden>
@@ -38,7 +38,7 @@
                           <span class="input-group-text colorpicker-input-addon"><i></i></span>
                         </span>
                     </div>
-                    <script>
+                    <script id="colorpicker{{ i }}">
                       $(function () {
                         $('#led{{ i }}').colorpicker({
                           format: "hex"
@@ -46,8 +46,8 @@
                       });
                     </script>
                   {% endfor %}
-                </div><br>
-              </div>
+                </div>
+              </div><br>
               <input type="submit" class="btn btn-success" value="Save"></input>
             </form>
           </div>
