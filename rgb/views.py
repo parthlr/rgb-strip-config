@@ -17,7 +17,7 @@ def new_profile(request):
 
 def update_profile(request, profile_id):
     profile_name = request.POST['profile_name']
-    num_leds = 10
+    num_leds = request.POST['num_leds']
     led_rgbs = {}
     for i in range(num_leds):
         current_led = request.POST['led' + str(i)]
@@ -29,7 +29,7 @@ def update_profile(request, profile_id):
 
 def save_profile(request):
     profile_name = request.POST['profile_name']
-    num_leds = 10
+    num_leds = request.POST['num_leds']
     led_rgbs = {}
     for i in range(num_leds):
         current_led = request.POST['led' + str(i)]
@@ -38,7 +38,7 @@ def save_profile(request):
     p = Profile.objects.create(name=profile_name, leds=num_leds, rgb_values=led_rgbs, active=True)
     update_active_profile(p)
 
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('profile', args=(p.id,)))
 
 def activate_profile(request, profile_id):
     Profile.objects.filter(id=profile_id).update(active=True)

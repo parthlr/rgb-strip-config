@@ -35,25 +35,35 @@
             </div>
             <form action="{% url 'update_profile' profile.id %}" method="post">
               {% csrf_token %}
-              <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name" value="{{ profile.name }}"></input>
               <div class="flex-container">
-                {% for i, hex in profile.rgb_values.items %}
-                  <div id="led{{ i }}" class="input-group" title="Using input value">
-                      <input type="text" name="led{{ i }}" class="form-control input-lg" hidden>
-                      <span class="input-group-append">
-                        <span class="input-group-text colorpicker-input-addon"><i></i></span>
-                      </span>
-                  </div>
-                  <script>
-                    $(function () {
-                      $('#led{{ i }}').colorpicker({
-                        format: "hex",
-                        color: "#{{ hex }}",
+                <div>
+                  <input type="text" name="profile_name" class="form-control input-lg" placeholder="Profile Name" value="{{ profile.name }}"></input>
+                </div>
+                <div>
+                  <input type="number" id="num_leds" name="num_leds" class="form-control input-lg" min="0" placeholder="Number of LEDs" value="{{ profile.leds }}" required></input>
+                </div>
+              </div>
+              <p id="test-text">Nothing</p>
+              <div id="leds">
+                <div class="flex-container" id="flex0">
+                  {% for i, hex in profile.rgb_values.items %}
+                    <div id="led{{ i }}" class="input-group" title="Using input value">
+                        <input type="text" id="input{{ i }}" name="led{{ i }}" class="form-control input-lg" value="#{{ hex }}" hidden>
+                        <span class="input-group-append">
+                          <span class="input-group-text colorpicker-input-addon"><i></i></span>
+                        </span>
+                    </div>
+                    <script>
+                      $(function () {
+                        $('#led{{ i }}').colorpicker({
+                          format: "hex",
+                          color: "#{{ hex }}",
+                        });
                       });
-                    });
-                  </script>
-                {% endfor %}
-              </div><br>
+                    </script>
+                  {% endfor %}
+                </div>
+              </div>
               <input type="submit" class="btn btn-success" value="Save"></input>
             </form>
           </div>
@@ -61,4 +71,6 @@
       </div>
     </div>
   </body>
+  {{ profile.leds|json_script:"leds" }}
+  <script type="text/javascript" src="{% static 'profile_led_editor.js' %}"></script>
 </html>
