@@ -45,6 +45,12 @@ a:active {
   border-radius: 3px;
 }
 
+.single-color {
+  -ms-transform: scale(2.0, 2.0); /* IE 9 */
+  -webkit-transform: scale(2.0, 2.0); /* Safari */
+  transform: scale(2.0, 2.0);
+}
+
 .card {
   background-color: #242424;
 }
@@ -57,4 +63,8 @@ input[type=text] {
 input[type=number] {
   background-color: #242424;
   color: white;
+}
+
+select {
+  background-color: #242424;
 }

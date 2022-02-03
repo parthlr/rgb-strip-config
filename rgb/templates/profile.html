@@ -44,7 +44,23 @@
                 </div>
               </div>
               <p id="test-text">Nothing</p>
+              <div class="flex-container">
+                <div class="w-25">
+                  <select name="profile_type" id="profile_type" class="form-control">
+                    <option value="default">Default</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
+                <div class="w-25">
+                  <select name="default_type" id="default_type" class="form-control">
+                    <option value="color">Color</option>
+                    <option value="gradient">Gradient</option>
+                    <option value="rainbow">Rainbow</option>
+                  </select>
+                </div>
+              </div><br>
               <div id="leds">
+
                 <div class="flex-container" id="flex0">
                   {% for i, hex in profile.rgb_values.items %}
                     <div id="led{{ i }}" class="input-group" title="Using input value">
@@ -63,7 +79,28 @@
                     </script>
                   {% endfor %}
                 </div>
-              </div>
+
+                <!--
+                <div class="d-flex justify-content-center">
+                  <div class="flex-container single-color">
+                    <div id="ledff" class="input-group" title="Using input value">
+                        <input type="text" id="inputff" name="ledff" class="form-control input-lg" value="#FF0000" hidden>
+                        <span class="input-group-append">
+                          <span class="input-group-text colorpicker-input-addon"><i></i></span>
+                        </span>
+                    </div>
+                    <script>
+                      $(function () {
+                        $('#ledff').colorpicker({
+                          format: "hex",
+                          color: "#FF0000",
+                        });
+                      });
+                    </script>
+                  </div>
+                </div>
+              -->
+              </div><br>
               <input type="submit" class="btn btn-success" value="Save"></input>
             </form>
           </div>
